@@ -6,7 +6,7 @@ import (
 )
 
 var (
-    pageStr = `
+	pageStr = `
 {
     "object": "page",
     "id": "bf07281b-3df6-45f5-8c70-8661b9182bc3",
@@ -58,14 +58,95 @@ var (
     "url": "https://www.notion.so/Nomo-bf07281b3df645f58c708661b9182bc3"
 }
 `
+
+	headBlockStr = `
+{
+    "object": "block",
+    "id": "b607fe4d-cb9a-4946-9e91-610b073f599b",
+    "created_time": "2021-09-06T15:08:00.000Z",
+    "last_edited_time": "2021-09-06T15:10:00.000Z",
+    "has_children": false,
+    "archived": false,
+    "type": "heading_3",
+    "heading_3": {
+        "text": [
+            {
+                "type": "text",
+                "text": {
+                    "content": "2021-08-31",
+                    "link": null
+                },
+                "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                },
+                "plain_text": "2021-08-31",
+                "href": null
+            }
+        ]
+    }
+}`
+
+	listBlockStr = `
+{
+    "object": "block",
+    "id": "a2c8ac40-861c-4bea-857d-ff23adb89e95",
+    "created_time": "2021-09-06T15:08:00.000Z",
+    "last_edited_time": "2021-09-06T15:11:00.000Z",
+    "has_children": false,
+    "archived": false,
+    "type": "bulleted_list_item",
+    "bulleted_list_item": {
+        "text": [
+            {
+                "type": "text",
+                "text": {
+                    "content": "能为教育做些什么呢？一个教育OA平台，可以让学生，老师，学校都能够完全无纸化？教育资源怎么能通过互联网实现公平化？",
+                    "link": null
+                },
+                "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                },
+                "plain_text": "能为教育做些什么呢？一个教育OA平台，可以让学生，老师，学校都能够完全无纸化？教育资源怎么能通过互联网实现公平化？",
+                "href": null
+            }
+        ]
+    }
+}
+`
 )
 
 func TestPage(t *testing.T) {
-    var page Page
-    err := json.Unmarshal([]byte(pageStr), &page)
-    if err != nil {
-        t.Fatal(err)
-    }
+	var page Page
+	err := json.Unmarshal([]byte(pageStr), &page)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-    t.Logf("page => %+v", page)
+	t.Logf("page => %+v", page)
+}
+
+func TestBlock(t *testing.T) {
+	var headBlock Block
+	err := json.Unmarshal([]byte(headBlockStr), &headBlock)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("head => %+v", headBlock)
+
+	var listBlock Block
+	err = json.Unmarshal([]byte(listBlockStr), &listBlock)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("list => %+v", listBlock)
 }
