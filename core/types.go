@@ -1,9 +1,5 @@
 package core
 
-const (
-	BASE_URL = "https://api.notion.com"
-)
-
 type idObject struct {
 	ID string `json:"id"`
 }
@@ -17,27 +13,19 @@ type externalFile struct {
 	URL string `json:"url"`
 }
 
-type FileObject struct {
+type fileObject struct {
 	Type         string        `json:"type"`
 	InternalFile *internalFile `json:"file,omitempty"`
 	ExternalFile *externalFile `json:"external,omitempty"`
 }
 
+type emojiObject struct {
+	Type  string `json:"type"`
+	Emoji string `json:"emoji"`
+}
+
 type richTextArrary []richTextObject
 
-type propertyValue struct {
-	ID   string `json:"id"`
-	Type string `json:"type"`
-
-	TitleObject  *titleObject       `json:"title,omitempty"`
-	RichText     *richTextArrary    `json:"rich_text,omitempty"`
-	Number       *numberObject      `json:"number,omitempty"`
-	SingleSelect *selectOption      `json:"select,omitempty"`
-	MultiSelect  *multiSelectObject `json:"multi_select,omitempty"`
-	Date         *dateObject        `json:"date,omitempty"`
-	Formula      *formulaObject     `json:"formula,omitempty"`
-	Relation     *relationObject    `json:"relation,omitempty"`
-}
 
 type relationObject struct {
 	Relations *[]idObject `json:"relation"`
@@ -65,15 +53,16 @@ type dateObject struct {
 
 type formulaObject struct {
 	Type    string      `json:"type"`
+	// type
 	String  *string     `json:"string,omitempty"`
 	Number  *int64      `json:"number,omitempty"`
 	Boolean *bool       `json:"bool,omitempty"`
 	Date    *dateObject `json:"date,omitempty"`
 }
 
-type titleObject struct {
-	Title string `json:"title"`
-}
+// type titleObject struct {
+// 	Title richTextArrary `json:"title"`
+// }
 
 type annotationObject struct {
 	Bold          bool `json:"bold"`
@@ -93,9 +82,15 @@ type annotationObject struct {
 
 type richTextObject struct {
 	Type        string           `json:"type"`
+	Text        textObject       `json:"text"`
 	PlainText   string           `json:"plain_text"`
 	Href        string           `json:"href,omitempty"`
 	Annotations annotationObject `json:"annotations"`
+}
+
+type textObject struct {
+	Content string  `json:"content"`
+	Link    string  `json:"link"`
 }
 
 type parentObject struct {
@@ -105,6 +100,13 @@ type parentObject struct {
 	IsWorkspace bool   `json:"workspace,omitempty"`
 }
 
+type rollupObject struct {
+	Type string `json:"type"`
+	// by type
+	Number  *int64      `json:"number,omitempty"`
+	Date    *dateObject `json:"date,omitempty"`
+}
+
 type Page struct {
 	Object         string                   `json:"object"`
 	ID             string                   `json:"id"`
@@ -112,8 +114,27 @@ type Page struct {
 	LastEditedTime string                   `json:"last_edited_time"`
 	Archived       bool                     `json:"archived"`
 	Icon           interface{}              `json:"icon"`
-	Cover          FileObject               `json:"cover"`
+	// FileObject or emojiObject
+	Cover          map[string]interface{}   `json:"cover"`
 	Properties     map[string]propertyValue `json:"properties"`
 	Parent         parentObject             `json:"parent"`
 	Url            string                   `json:"string"`
+}
+
+type propertyValue struct {
+	ID   string `json:"id"`
+	Type string `json:"type"`
+	// Value map[string]interface{} `json:",remain"`
+
+	// one of the following objects will be populated
+	// accroding to the type value
+	TitleObject  *richTextArrary    `json:"title,omitempty"`
+	RichText     *richTextArrary    `json:"rich_text,omitempty"`
+	Number       *numberObject      `json:"number,omitempty"`
+	SingleSelect *selectOption      `json:"select,omitempty"`
+	MultiSelect  *multiSelectObject `json:"multi_select,omitempty"`
+	Date         *dateObject        `json:"date,omitempty"`
+	Formula      *formulaObject     `json:"formula,omitempty"`
+	Relation     *relationObject    `json:"relation,omitempty"`
+    Rollup       *rollupObject `json:"rollup,omitempty"`
 }
