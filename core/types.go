@@ -115,7 +115,7 @@ type RollupObject struct {
 	Date   *DateObject `json:"date,omitempty"`
 }
 
-type propertyValue struct {
+type PropertyValue struct {
 	ID   *string `json:"id,omitempty"`
 	Type *string `json:"type,omitempty"`
 	// Value map[string]interface{} `json:",remain"`
@@ -143,7 +143,7 @@ type Page struct {
 	Icon interface{} `json:"icon,omitempty"`
 	// FileObject or EmojiObject
 	Cover      map[string]interface{}   `json:"cover,omitempty"`
-	Properties map[string]propertyValue `json:"properties,omitempty"`
+	Properties map[string]PropertyValue `json:"properties,omitempty"`
 	Parent     *parentObject            `json:"parent,omitempty"`
 	Url        *string                  `json:"string,omitempty"`
 }
