@@ -33,7 +33,7 @@ type EmojiObject struct {
 	Emoji *string `json:"emoji,omitempty"`
 }
 
-type RichTextArrary []richTextObject
+type RichTextArrary []RichTextObject
 
 type RelationObject struct {
 	Relations []IdObject `json:"relation,omitempty"`
@@ -88,7 +88,7 @@ type annotationObject struct {
 	Color *string `json:"color,omitempty"`
 }
 
-type richTextObject struct {
+type RichTextObject struct {
 	Type        *string           `json:"type,omitempty"`
 	Text        *textObject       `json:"text,omitempty"`
 	PlainText   *string           `json:"plain_text,omitempty"`
