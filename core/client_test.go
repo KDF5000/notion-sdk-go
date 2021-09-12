@@ -60,7 +60,7 @@ func TestBlockAppend(t *testing.T) {
 	var block1 Block
 	block1.Object = &OBJECT_BLOCK
 	block1.Type = &BLOCK_HEADING3
-	var heading3Block headingBlobck
+	var heading3Block HeadingBlobck
 	date := "2021-09-12"
 	heading3Block.Text = append(heading3Block.Text, richTextObject{
 		Type: &TYPE_TEXT,
@@ -71,7 +71,7 @@ func TestBlockAppend(t *testing.T) {
 	block1.Heading3Block = &heading3Block
 	blocks = append(blocks, &block1)
 
-	var bulletedItem listItemBlock
+	var bulletedItem ListItemBlock
 	item := "这是一个测试的BulletedItem"
 	bulletedItem.Text = append(bulletedItem.Text,
 		richTextObject{

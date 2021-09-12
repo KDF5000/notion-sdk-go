@@ -9,41 +9,41 @@ var (
 	TYPE_TEXT                = "text"
 )
 
-type idObject struct {
+type IdObject struct {
 	ID *string `json:"id,omitempty"`
 }
 
-type internalFile struct {
+type InternalFile struct {
 	URL        *string `json:"url,omitempty"`
 	ExpiryTime *string `json:"expiry_time,omitempty"`
 }
 
-type externalFile struct {
+type ExternalFile struct {
 	URL *string `json:"url,omitempty"`
 }
 
-type fileObject struct {
+type FileObject struct {
 	Type         *string       `json:"type,omitempty"`
-	InternalFile *internalFile `json:"file,omitempty"`
-	ExternalFile *externalFile `json:"external,omitempty"`
+	InternalFile *InternalFile `json:"file,omitempty"`
+	ExternalFile *ExternalFile `json:"external,omitempty"`
 }
 
-type emojiObject struct {
+type EmojiObject struct {
 	Type  *string `json:"type,omitempty"`
 	Emoji *string `json:"emoji,omitempty"`
 }
 
-type richTextArrary []richTextObject
+type RichTextArrary []richTextObject
 
-type relationObject struct {
-	Relations []idObject `json:"relation,omitempty"`
+type RelationObject struct {
+	Relations []IdObject `json:"relation,omitempty"`
 }
 
-type numberObject struct {
+type NumberObject struct {
 	Number *int64 `json:"number,omitempty"`
 }
 
-type selectOption struct {
+type SelectOption struct {
 	ID   *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 	// "default", "gray", "brown",
@@ -52,24 +52,24 @@ type selectOption struct {
 	Color *string `json:"color,omitempty"`
 }
 
-type multiSelectObject []selectOption
+type MultiSelectObject []SelectOption
 
-type dateObject struct {
+type DateObject struct {
 	Start *string `json:"start,omitempty"`
 	End   *string `json:"end,omitempty"`
 }
 
-type formulaObject struct {
+type FormulaObject struct {
 	Type *string `json:"type,omitempty"`
 	// type
 	String  *string     `json:"string,omitempty"`
 	Number  *int64      `json:"number,omitempty"`
 	Boolean *bool       `json:"bool,omitempty"`
-	Date    *dateObject `json:"date,omitempty"`
+	Date    *DateObject `json:"date,omitempty"`
 }
 
 // type titleObject struct {
-// 	Title richTextArrary `json:"title"`
+// 	Title RichTextArrary `json:"title"`
 // }
 
 type annotationObject struct {
@@ -108,11 +108,11 @@ type parentObject struct {
 	IsWorkspace *bool   `json:"workspace,omitempty"`
 }
 
-type rollupObject struct {
+type RollupObject struct {
 	Type *string `json:"type,omitempty"`
 	// by type
 	Number *int64      `json:"number,omitempty"`
-	Date   *dateObject `json:"date,omitempty"`
+	Date   *DateObject `json:"date,omitempty"`
 }
 
 type propertyValue struct {
@@ -122,15 +122,15 @@ type propertyValue struct {
 
 	// one of the following objects will be populated
 	// accroding to the type value
-	TitleObject  *richTextArrary    `json:"title,omitempty"`
-	RichText     *richTextArrary    `json:"rich_text,omitempty"`
-	Number       *numberObject      `json:"number,omitempty"`
-	SingleSelect *selectOption      `json:"select,omitempty"`
-	MultiSelect  *multiSelectObject `json:"multi_select,omitempty"`
-	Date         *dateObject        `json:"date,omitempty"`
-	Formula      *formulaObject     `json:"formula,omitempty"`
-	Relation     *relationObject    `json:"relation,omitempty"`
-	Rollup       *rollupObject      `json:"rollup,omitempty"`
+	TitleObject  *RichTextArrary    `json:"title,omitempty"`
+	RichText     *RichTextArrary    `json:"rich_text,omitempty"`
+	Number       *NumberObject      `json:"number,omitempty"`
+	SingleSelect *SelectOption      `json:"select,omitempty"`
+	MultiSelect  *MultiSelectObject `json:"multi_select,omitempty"`
+	Date         *DateObject        `json:"date,omitempty"`
+	Formula      *FormulaObject     `json:"formula,omitempty"`
+	Relation     *RelationObject    `json:"relation,omitempty"`
+	Rollup       *RollupObject      `json:"rollup,omitempty"`
 }
 
 type Page struct {
@@ -139,67 +139,67 @@ type Page struct {
 	CreatedTime    *string `json:"created_time,omitempty"`
 	LastEditedTime *string `json:"last_edited_time,omitempty"`
 	Archived       *bool   `json:"archived,omitempty"`
-	// fileObject or emojObject
+	// FileObject or EmojObject
 	Icon interface{} `json:"icon,omitempty"`
-	// FileObject or emojiObject
+	// FileObject or EmojiObject
 	Cover      map[string]interface{}   `json:"cover,omitempty"`
 	Properties map[string]propertyValue `json:"properties,omitempty"`
 	Parent     *parentObject            `json:"parent,omitempty"`
 	Url        *string                  `json:"string,omitempty"`
 }
 
-type paragraphBlobck struct {
-	Text     richTextArrary `json:"text,omitempty"`
+type ParagraphBlobck struct {
+	Text     RichTextArrary `json:"text,omitempty"`
 	Children []Block        `json:"children,omitempty"`
 }
 
-type headingBlobck struct {
-	Text richTextArrary `json:"text,omitempty"`
+type HeadingBlobck struct {
+	Text RichTextArrary `json:"text,omitempty"`
 }
 
-type listItemBlock struct {
-	Text     richTextArrary `json:"text,omitempty"`
+type ListItemBlock struct {
+	Text     RichTextArrary `json:"text,omitempty"`
 	Children []Block        `json:"children,omitempty"`
 }
 
-type todoBlock struct {
-	Text     richTextArrary `json:"text,omitempty"`
+type TodoBlock struct {
+	Text     RichTextArrary `json:"text,omitempty"`
 	Checked  *bool          `json:"checked,omitempty"`
 	Children []Block        `json:"children,omitempty"`
 }
 
-type toggleBlock struct {
-	Text     richTextArrary `json:"text,omitempty"`
+type ToggleBlock struct {
+	Text     RichTextArrary `json:"text,omitempty"`
 	Children []Block        `json:"children,omitempty"`
 }
 
-type childPageBlock struct {
+type ChildPageBlock struct {
 	Title *string `json:"title,omitempty"`
 }
 
-type embedBlock struct {
+type EmbedBlock struct {
 	Url *string `json:"url,omitempty"`
 }
 
-type imageBlock struct {
-	fileObject
+type ImageBlock struct {
+	FileObject
 }
 
-type videoBlock struct {
-	fileObject
+type VideoBlock struct {
+	FileObject
 }
 
-type fileBlock struct {
-	fileObject
+type FileBlock struct {
+	FileObject
 }
 
-type pdfBlock struct {
-	fileObject
+type PdfBlock struct {
+	FileObject
 }
 
-type bookmarkBlock struct {
+type BookmarkBlock struct {
 	Url     *string        `json:"url,omitempty"`
-	Cpation richTextArrary `json:"caption,omitempty"`
+	Cpation RichTextArrary `json:"caption,omitempty"`
 }
 
 type Block struct {
@@ -217,19 +217,19 @@ type Block struct {
 	HasChildren    *bool   `json:"has_children,omitempty"`
 
 	// one of the following blocks will be populated
-	ParagraphBlock        *paragraphBlobck `json:"paragraph,omitempty"`
-	Heading1Block         *headingBlobck   `json:"heading_1,omitempty"`
-	Heading2Block         *headingBlobck   `json:"heading_2,omitempty"`
-	Heading3Block         *headingBlobck   `json:"heading_3,omitempty"`
-	BulletedListItemBlock *listItemBlock   `json:"bulleted_list_item,omitempty"`
-	NumberedListItemBlock *listItemBlock   `json:"numbered_list_item,omitempty"`
-	TodoBlockBlock        *todoBlock       `json:"to_do,omitempty"`
-	ToggleBlock           *toggleBlock     `json:"toggle,omitempty"`
-	ChildPageBlock        *childPageBlock  `json:"child_page,omitempty"`
-	EmbedBlock            *embedBlock      `json:"embed,omitempty"`
-	ImageBlock            *imageBlock      `json:"image,omitempty"`
-	VideoBlock            *videoBlock      `json:"video,omitempty"`
-	FileBlock             *fileBlock       `json:"file,omitempty"`
-	PdfBlock              *pdfBlock        `json:"pdf,omitempty"`
-	BookmarkBlock         *bookmarkBlock   `json:"bookmark,omitempty"`
+	ParagraphBlock        *ParagraphBlobck `json:"paragraph,omitempty"`
+	Heading1Block         *HeadingBlobck   `json:"heading_1,omitempty"`
+	Heading2Block         *HeadingBlobck   `json:"heading_2,omitempty"`
+	Heading3Block         *HeadingBlobck   `json:"heading_3,omitempty"`
+	BulletedListItemBlock *ListItemBlock   `json:"bulleted_list_item,omitempty"`
+	NumberedListItemBlock *ListItemBlock   `json:"numbered_list_item,omitempty"`
+	TodoBlockBlock        *TodoBlock       `json:"to_do,omitempty"`
+	ToggleBlock           *ToggleBlock     `json:"toggle,omitempty"`
+	ChildPageBlock        *ChildPageBlock  `json:"child_page,omitempty"`
+	EmbedBlock            *EmbedBlock      `json:"embed,omitempty"`
+	ImageBlock            *ImageBlock      `json:"image,omitempty"`
+	VideoBlock            *VideoBlock      `json:"video,omitempty"`
+	FileBlock             *FileBlock       `json:"file,omitempty"`
+	PdfBlock              *PdfBlock        `json:"pdf,omitempty"`
+	BookmarkBlock         *BookmarkBlock   `json:"bookmark,omitempty"`
 }
