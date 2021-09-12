@@ -72,7 +72,7 @@ type FormulaObject struct {
 // 	Title RichTextArrary `json:"title"`
 // }
 
-type annotationObject struct {
+type AnnotationObject struct {
 	Bold          *bool `json:"bold,omitempty"`
 	Italic        *bool `json:"italic,omitempty"`
 	Strikethrough *bool `json:"strikethrough,omitempty"`
@@ -90,18 +90,18 @@ type annotationObject struct {
 
 type RichTextObject struct {
 	Type        *string           `json:"type,omitempty"`
-	Text        *textObject       `json:"text,omitempty"`
+	Text        *TextObject       `json:"text,omitempty"`
 	PlainText   *string           `json:"plain_text,omitempty"`
 	Href        *string           `json:"href,omitempty"`
-	Annotations *annotationObject `json:"annotations,omitempty"`
+	Annotations *AnnotationObject `json:"annotations,omitempty"`
 }
 
-type textObject struct {
+type TextObject struct {
 	Content *string `json:"content,omitempty"`
 	Link    *string `json:"link,omitempty"`
 }
 
-type parentObject struct {
+type ParentObject struct {
 	Type        *string `json:"type,omitempty"`
 	DatabaseID  *string `json:"database_id,omitempty"`
 	PageID      *string `json:"page_id,omitempty"`
@@ -144,7 +144,7 @@ type Page struct {
 	// FileObject or EmojiObject
 	Cover      map[string]interface{}   `json:"cover,omitempty"`
 	Properties map[string]PropertyValue `json:"properties,omitempty"`
-	Parent     *parentObject            `json:"parent,omitempty"`
+	Parent     *ParentObject            `json:"parent,omitempty"`
 	Url        *string                  `json:"string,omitempty"`
 }
 
