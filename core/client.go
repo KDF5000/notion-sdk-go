@@ -104,7 +104,6 @@ func (c *Client) AppendBlock(blockId string, blocks []*Block) error {
 		return err
 	}
 
-	fmt.Printf("%v", string(data))
 	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(data))
 	if err != nil {
 		return err
