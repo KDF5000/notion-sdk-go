@@ -2,9 +2,12 @@ package core
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 const (
@@ -29,6 +32,42 @@ type RetriveBlockChildrenResp struct {
 
 func NewClient(opt *Option) (*Client, error) {
 	return &Client{option: opt}, nil
+}
+
+func (c *Client) CreatePage(page *Page) error {
+	url := fmt.Sprintf("%s/pages", BASE_URI)
+	payload, err := json.Marshal(page)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("%s, key:%s", string(payload), c.option.SecretKey)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Notion-Version", NOTION_VERSION)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.option.SecretKey))
+	req.Header.Set("Content-Type", "application/json")
+	ctx, cancel := context.WithTimeout(context.TODO(), 5*time.Second)
+	defer cancel()
+	req = req.WithContext(ctx)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+
+	r, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("%+v", string(r))
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
+	}
+
+	return nil
 }
 
 func (c *Client) RetrivePage(id string) (*Page, error) {

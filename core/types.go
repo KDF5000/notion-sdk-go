@@ -2,34 +2,38 @@ package core
 
 var (
 	OBJECT_BLOCK             = "block"
+	BLOCK_PARAGRAPH          = "paragraph"
 	BLOCK_BULLETED_LIST_ITEM = "bulleted_list_item"
 	BLOCK_HEADING1           = "heading_1"
 	BLOCK_HEADING2           = "heading_2"
 	BLOCK_HEADING3           = "heading_3"
 	TYPE_TEXT                = "text"
+	TYPE_TITLE               = "title"
+	TYPE_SELECT              = "select"
+	TYPE_MULTI_SELECT        = "multi_select"
 )
 
 type IdObject struct {
-	ID *string `json:"id,omitempty"`
+	ID string `json:"id,omitempty"`
 }
 
 type InternalFile struct {
-	URL        *string `json:"url,omitempty"`
-	ExpiryTime *string `json:"expiry_time,omitempty"`
+	URL        string `json:"url,omitempty"`
+	ExpiryTime string `json:"expiry_time,omitempty"`
 }
 
 type ExternalFile struct {
-	URL *string `json:"url,omitempty"`
+	URL string `json:"url,omitempty"`
 }
 
 type FileObject struct {
-	Type         *string       `json:"type,omitempty"`
+	Type         string        `json:"type,omitempty"`
 	InternalFile *InternalFile `json:"file,omitempty"`
 	ExternalFile *ExternalFile `json:"external,omitempty"`
 }
 
 type EmojiObject struct {
-	Type  *string `json:"type,omitempty"`
+	Type  string  `json:"type,omitempty"`
 	Emoji *string `json:"emoji,omitempty"`
 }
 
@@ -40,31 +44,31 @@ type RelationObject struct {
 }
 
 type NumberObject struct {
-	Number *int64 `json:"number,omitempty"`
+	Number int64 `json:"number,omitempty"`
 }
 
 type SelectOption struct {
-	ID   *string `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	ID   string `json:"id,omitempty"`
+	Name string `json:"name,omitempty"`
 	// "default", "gray", "brown",
 	// "red", "orange", "yellow",
 	// "green", "blue", "purple", "pink".
-	Color *string `json:"color,omitempty"`
+	Color string `json:"color,omitempty"`
 }
 
 type MultiSelectObject []SelectOption
 
 type DateObject struct {
-	Start *string `json:"start,omitempty"`
-	End   *string `json:"end,omitempty"`
+	Start string `json:"start,omitempty"`
+	End   string `json:"end,omitempty"`
 }
 
 type FormulaObject struct {
-	Type *string `json:"type,omitempty"`
+	Type string `json:"type,omitempty"`
 	// type
-	String  *string     `json:"string,omitempty"`
-	Number  *int64      `json:"number,omitempty"`
-	Boolean *bool       `json:"bool,omitempty"`
+	String  string      `json:"string,omitempty"`
+	Number  int64       `json:"number,omitempty"`
+	Boolean bool        `json:"bool,omitempty"`
 	Date    *DateObject `json:"date,omitempty"`
 }
 
@@ -73,11 +77,11 @@ type FormulaObject struct {
 // }
 
 type AnnotationObject struct {
-	Bold          *bool `json:"bold,omitempty"`
-	Italic        *bool `json:"italic,omitempty"`
-	Strikethrough *bool `json:"strikethrough,omitempty"`
-	Underline     *bool `json:"underline,omitempty"`
-	Code          *bool `json:"code,omitempty"`
+	Bold          bool `json:"bold,omitempty"`
+	Italic        bool `json:"italic,omitempty"`
+	Strikethrough bool `json:"strikethrough,omitempty"`
+	Underline     bool `json:"underline,omitempty"`
+	Code          bool `json:"code,omitempty"`
 	// "default", "gray", "brown", "orange",
 	// "yellow", "green", "blue", "purple",
 	// "pink", "red", "gray_background",
@@ -85,39 +89,39 @@ type AnnotationObject struct {
 	// "yellow_background", "green_background",
 	// "blue_background", "purple_background",
 	// "pink_background", "red_background"
-	Color *string `json:"color,omitempty"`
+	Color string `json:"color,omitempty"`
 }
 
 type RichTextObject struct {
-	Type        *string           `json:"type,omitempty"`
-	Text        *TextObject       `json:"text,omitempty"`
-	PlainText   *string           `json:"plain_text,omitempty"`
-	Href        *string           `json:"href,omitempty"`
+	Type        string            `json:"type,omitempty"`
+	PlainText   string            `json:"plain_text,omitempty"`
+	Href        string            `json:"href,omitempty"`
 	Annotations *AnnotationObject `json:"annotations,omitempty"`
+	Text        *TextObject       `json:"text,omitempty"`
 }
 
 type TextObject struct {
-	Content *string `json:"content,omitempty"`
-	Link    *string `json:"link,omitempty"`
+	Content string `json:"content,omitempty"`
+	Link    string `json:"link,omitempty"`
 }
 
 type ParentObject struct {
-	Type        *string `json:"type,omitempty"`
-	DatabaseID  *string `json:"database_id,omitempty"`
-	PageID      *string `json:"page_id,omitempty"`
-	IsWorkspace *bool   `json:"workspace,omitempty"`
+	Type        string `json:"type,omitempty"`
+	IsWorkspace bool   `json:"workspace,omitempty"`
+	DatabaseID  string `json:"database_id,omitempty"`
+	PageID      string `json:"page_id,omitempty"`
 }
 
 type RollupObject struct {
-	Type *string `json:"type,omitempty"`
+	Type string `json:"type,omitempty"`
 	// by type
-	Number *int64      `json:"number,omitempty"`
+	Number int64       `json:"number,omitempty"`
 	Date   *DateObject `json:"date,omitempty"`
 }
 
 type PropertyValue struct {
-	ID   *string `json:"id,omitempty"`
-	Type *string `json:"type,omitempty"`
+	ID   string `json:"id,omitempty"`
+	Type string `json:"type,omitempty"`
 	// Value map[string]interface{} `json:",remain"`
 
 	// one of the following objects will be populated
@@ -134,18 +138,19 @@ type PropertyValue struct {
 }
 
 type Page struct {
-	Object         *string `json:"object,omitempty"`
-	ID             *string `json:"id,omitempty"`
-	CreatedTime    *string `json:"created_time,omitempty"`
-	LastEditedTime *string `json:"last_edited_time,omitempty"`
-	Archived       *bool   `json:"archived,omitempty"`
+	Object         string `json:"object,omitempty"`
+	ID             string `json:"id,omitempty"`
+	CreatedTime    string `json:"created_time,omitempty"`
+	LastEditedTime string `json:"last_edited_time,omitempty"`
+	Archived       bool   `json:"archived,omitempty"`
 	// FileObject or EmojObject
 	Icon interface{} `json:"icon,omitempty"`
 	// FileObject or EmojiObject
 	Cover      map[string]interface{}   `json:"cover,omitempty"`
 	Properties map[string]PropertyValue `json:"properties,omitempty"`
-	Parent     *ParentObject            `json:"parent,omitempty"`
-	Url        *string                  `json:"string,omitempty"`
+	Parent     ParentObject             `json:"parent,omitempty"`
+	Url        string                   `json:"string,omitempty"`
+	Children   []Block                  `json:"children"`
 }
 
 type ParagraphBlobck struct {
@@ -174,11 +179,11 @@ type ToggleBlock struct {
 }
 
 type ChildPageBlock struct {
-	Title *string `json:"title,omitempty"`
+	Title string `json:"title,omitempty"`
 }
 
 type EmbedBlock struct {
-	Url *string `json:"url,omitempty"`
+	Url string `json:"url,omitempty"`
 }
 
 type ImageBlock struct {
@@ -198,23 +203,23 @@ type PdfBlock struct {
 }
 
 type BookmarkBlock struct {
-	Url     *string        `json:"url,omitempty"`
+	Url     string         `json:"url,omitempty"`
 	Cpation RichTextArrary `json:"caption,omitempty"`
 }
 
 type Block struct {
-	Object *string `json:"object,omitempty"`
-	ID     *string `json:"id,omitempty"`
+	Object string `json:"object,omitempty"`
+	ID     string `json:"id,omitempty"`
 	// "paragraph", "heading_1", "heading_2",
 	// "heading_3", "bulleted_list_item",
 	// "numbered_list_item", "to_do", "toggle",
 	// "child_page", "embed", "image", "video",
 	// "file", "pdf", "bookmark" and "unsupported"
-	Type           *string `json:"type,omitempty"`
-	CreatedTime    *string `json:"created_time,omitempty"`
-	LastEditedTime *string `json:"last_edited_time,omitempty"`
-	Archived       *bool   `json:"archived,omitempty"`
-	HasChildren    *bool   `json:"has_children,omitempty"`
+	Type           string `json:"type,omitempty"`
+	CreatedTime    string `json:"created_time,omitempty"`
+	LastEditedTime string `json:"last_edited_time,omitempty"`
+	Archived       bool   `json:"archived,omitempty"`
+	HasChildren    bool   `json:"has_children,omitempty"`
 
 	// one of the following blocks will be populated
 	ParagraphBlock        *ParagraphBlobck `json:"paragraph,omitempty"`

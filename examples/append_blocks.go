@@ -22,7 +22,7 @@ func AppendContent(client *core.Client, pageId string, content string) error {
 	}
 
 	// 2020-08-12T02:12:33.231Z
-	lastEditTime, err := time.Parse(time.RFC3339, *page.LastEditedTime)
+	lastEditTime, err := time.Parse(time.RFC3339, page.LastEditedTime)
 	if err != nil {
 		return err
 	}
@@ -30,14 +30,14 @@ func AppendContent(client *core.Client, pageId string, content string) error {
 	var blocks []*core.Block
 	if lastEditTime.Local().Day() != time.Now().Day() {
 		var block core.Block
-		block.Object = &core.OBJECT_BLOCK
-		block.Type = &core.BLOCK_HEADING3
+		block.Object = core.OBJECT_BLOCK
+		block.Type = core.BLOCK_HEADING3
 		var heading3Block core.HeadingBlobck
 		date := time.Now().Format("2006-01-02")
 		heading3Block.Text = append(heading3Block.Text, core.RichTextObject{
-			Type: &core.TYPE_TEXT,
+			Type: core.TYPE_TEXT,
 			Text: &core.TextObject{
-				Content: &date,
+				Content: date,
 			},
 		})
 		block.Heading3Block = &heading3Block
@@ -47,15 +47,15 @@ func AppendContent(client *core.Client, pageId string, content string) error {
 	var bulletedItem core.ListItemBlock
 	bulletedItem.Text = append(bulletedItem.Text,
 		core.RichTextObject{
-			Type: &core.TYPE_TEXT,
+			Type: core.TYPE_TEXT,
 			Text: &core.TextObject{
-				Content: &content,
+				Content: content,
 			},
 		})
 
 	blocks = append(blocks, &core.Block{
-		Object:                &core.OBJECT_BLOCK,
-		Type:                  &core.BLOCK_BULLETED_LIST_ITEM,
+		Object:                core.OBJECT_BLOCK,
+		Type:                  core.BLOCK_BULLETED_LIST_ITEM,
 		BulletedListItemBlock: &bulletedItem,
 	})
 
