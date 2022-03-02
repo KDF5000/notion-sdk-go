@@ -153,7 +153,7 @@ type Page struct {
 	Children   []Block                  `json:"children"`
 }
 
-type ParagraphBlobck struct {
+type ParagraphBlock struct {
 	Text     RichTextArrary `json:"text,omitempty"`
 	Children []Block        `json:"children,omitempty"`
 }
@@ -222,19 +222,19 @@ type Block struct {
 	HasChildren    bool   `json:"has_children,omitempty"`
 
 	// one of the following blocks will be populated
-	ParagraphBlock        *ParagraphBlobck `json:"paragraph,omitempty"`
-	Heading1Block         *HeadingBlobck   `json:"heading_1,omitempty"`
-	Heading2Block         *HeadingBlobck   `json:"heading_2,omitempty"`
-	Heading3Block         *HeadingBlobck   `json:"heading_3,omitempty"`
-	BulletedListItemBlock *ListItemBlock   `json:"bulleted_list_item,omitempty"`
-	NumberedListItemBlock *ListItemBlock   `json:"numbered_list_item,omitempty"`
-	TodoBlockBlock        *TodoBlock       `json:"to_do,omitempty"`
-	ToggleBlock           *ToggleBlock     `json:"toggle,omitempty"`
-	ChildPageBlock        *ChildPageBlock  `json:"child_page,omitempty"`
-	EmbedBlock            *EmbedBlock      `json:"embed,omitempty"`
-	ImageBlock            *ImageBlock      `json:"image,omitempty"`
-	VideoBlock            *VideoBlock      `json:"video,omitempty"`
-	FileBlock             *FileBlock       `json:"file,omitempty"`
-	PdfBlock              *PdfBlock        `json:"pdf,omitempty"`
-	BookmarkBlock         *BookmarkBlock   `json:"bookmark,omitempty"`
+	ParagraphBlock        *ParagraphBlock `json:"paragraph,omitempty"`
+	Heading1Block         *HeadingBlobck  `json:"heading_1,omitempty"`
+	Heading2Block         *HeadingBlobck  `json:"heading_2,omitempty"`
+	Heading3Block         *HeadingBlobck  `json:"heading_3,omitempty"`
+	BulletedListItemBlock *ListItemBlock  `json:"bulleted_list_item,omitempty"`
+	NumberedListItemBlock *ListItemBlock  `json:"numbered_list_item,omitempty"`
+	TodoBlockBlock        *TodoBlock      `json:"to_do,omitempty"`
+	ToggleBlock           *ToggleBlock    `json:"toggle,omitempty"`
+	ChildPageBlock        *ChildPageBlock `json:"child_page,omitempty"`
+	EmbedBlock            *EmbedBlock     `json:"embed,omitempty"`
+	ImageBlock            *ImageBlock     `json:"image,omitempty"`
+	VideoBlock            *VideoBlock     `json:"video,omitempty"`
+	FileBlock             *FileBlock      `json:"file,omitempty"`
+	PdfBlock              *PdfBlock       `json:"pdf,omitempty"`
+	BookmarkBlock         *BookmarkBlock  `json:"bookmark,omitempty"`
 }

@@ -115,7 +115,7 @@ func TestAddPage(t *testing.T) {
 	var textBlock Block
 	textBlock.Object = OBJECT_BLOCK
 	textBlock.Type = BLOCK_PARAGRAPH
-	var content ParagraphBlobck
+	var content ParagraphBlock
 	content.Text = append(content.Text, RichTextObject{
 		Type: TYPE_TEXT,
 		Text: &TextObject{
