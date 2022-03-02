@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -41,7 +40,7 @@ func (c *Client) CreatePage(page *Page) error {
 		return err
 	}
 
-	fmt.Printf("%s, key:%s", string(payload), c.option.SecretKey)
+	// fmt.Printf("%s, key:%s", string(payload), c.option.SecretKey)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	if err != nil {
 		return err
@@ -58,11 +57,11 @@ func (c *Client) CreatePage(page *Page) error {
 		return err
 	}
 
-	r, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-	fmt.Printf("%+v", string(r))
+	// r, err := ioutil.ReadAll(resp.Body)
+	// if err != nil {
+	// 	return err
+	// }
+	// fmt.Printf("%+v", string(r))
 	if resp.StatusCode != 200 {
 		return fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
 	}
