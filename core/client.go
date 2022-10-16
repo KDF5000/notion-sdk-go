@@ -6,7 +6,22 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net"
 	"time"
+)
+
+var (
+	defaultHttpClient = http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyFromEnvironment,
+			Dial: (&net.Dialer{
+				Timeout:   10  * time.Second,
+				KeepAlive: 30 * time.Second,
+			}).Dial,
+			TLSHandshakeTimeout: 10 * time.Second,
+		},
+		Timeout: 30 * time.Second,
+	}
 )
 
 const (
@@ -52,7 +67,7 @@ func (c *Client) CreatePage(page *Page) error {
 	ctx, cancel := context.WithTimeout(context.TODO(), 5*time.Second)
 	defer cancel()
 	req = req.WithContext(ctx)
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := defaultHttpClient.Do(req)
 	if err != nil {
 		return err
 	}
@@ -79,7 +94,7 @@ func (c *Client) RetrivePage(id string) (*Page, error) {
 	req.Header.Set("Notion-Version", NOTION_VERSION)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.option.SecretKey))
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := defaultHttpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +126,7 @@ func (c *Client) RetriveBlockChildren(blockId string, startCursor string, pageSi
 	req.Header.Set("Notion-Version", NOTION_VERSION)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.option.SecretKey))
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := defaultHttpClient.Do(req)
 	if err != nil {
 		return nil, "", false, err
 	}
@@ -151,7 +166,7 @@ func (c *Client) AppendBlock(blockId string, blocks []*Block) error {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.option.SecretKey))
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := defaultHttpClient.Do(req)
 	if err != nil {
 		return err
 	}
