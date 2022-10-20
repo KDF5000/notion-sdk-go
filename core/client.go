@@ -2,7 +2,7 @@ package core
 
 import (
 	"bytes"
-	"context"
+	// "context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -64,9 +64,9 @@ func (c *Client) CreatePage(page *Page) error {
 	req.Header.Set("Notion-Version", NOTION_VERSION)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.option.SecretKey))
 	req.Header.Set("Content-Type", "application/json")
-	ctx, cancel := context.WithTimeout(context.TODO(), 5*time.Second)
-	defer cancel()
-	req = req.WithContext(ctx)
+	// ctx, cancel := context.WithTimeout(context.TODO(), 5*time.Second)
+	// defer cancel()
+	// req = req.WithContext(ctx)
 	resp, err := defaultHttpClient.Do(req)
 	if err != nil {
 		return err
