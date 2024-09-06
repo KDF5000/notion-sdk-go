@@ -2,10 +2,12 @@ package core
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"net/http"
+	"io"
 	"net"
+	"net/http"
 	"time"
 )
 
@@ -14,12 +16,12 @@ var (
 		Transport: &http.Transport{
 			Proxy: http.ProxyFromEnvironment,
 			Dial: (&net.Dialer{
-				Timeout:   10  * time.Second,
+				Timeout:   60 * time.Second,
 				KeepAlive: 30 * time.Second,
 			}).Dial,
-			TLSHandshakeTimeout: 10 * time.Second,
+			TLSHandshakeTimeout: 60 * time.Second,
 		},
-		Timeout: 30 * time.Second,
+		Timeout: 60 * time.Second,
 	}
 )
 
@@ -63,21 +65,20 @@ func (c *Client) CreatePage(page *Page) error {
 	req.Header.Set("Notion-Version", NOTION_VERSION)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.option.SecretKey))
 	req.Header.Set("Content-Type", "application/json")
-	// ctx, cancel := context.WithTimeout(context.TODO(), 5*time.Second)
-	// defer cancel()
-	// req = req.WithContext(ctx)
+	ctx, cancel := context.WithTimeout(context.TODO(), 60*time.Second)
+	defer cancel()
+	req = req.WithContext(ctx)
 	resp, err := defaultHttpClient.Do(req)
 	if err != nil {
 		return err
 	}
 
-	// r, err := ioutil.ReadAll(resp.Body)
-	// if err != nil {
-	// 	return err
-	// }
-	// fmt.Printf("%+v", string(r))
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
+		r, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
+		}
+		return fmt.Errorf("code=%d, status=%s, message: %s", resp.StatusCode, resp.Status, string(r))
 	}
 
 	return nil
@@ -99,7 +100,11 @@ func (c *Client) RetrivePage(id string) (*Page, error) {
 	}
 
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
+		r, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
+		}
+		return nil, fmt.Errorf("code=%d, status=%s, message: %s", resp.StatusCode, resp.Status, string(r))
 	}
 
 	var page Page
@@ -170,13 +175,12 @@ func (c *Client) AppendBlock(blockId string, blocks []*Block) error {
 		return err
 	}
 
-	// r, err := ioutil.ReadAll(resp.Body)
-	// if err != nil {
-	// 	return err
-	// }
-	// fmt.Printf("%+v", string(r))
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
+		r, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return fmt.Errorf("code=%d, status=%s", resp.StatusCode, resp.Status)
+		}
+		return fmt.Errorf("code=%d, status=%s, message: %s", resp.StatusCode, resp.Status, string(r))
 	}
 
 	return nil
